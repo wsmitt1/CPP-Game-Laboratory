@@ -56,10 +56,10 @@ namespace bs {
         if (r == ShotResult::Miss)
             CurrentPlayerMut().tracking.SetCell(c, Cell::Miss);
         else if (r == ShotResult::Hit || r == ShotResult::Sunk)
-            CurrentPlayerMut().tracking.SetCell(c, Cell::Ship); // BUG: should be Hit
+            CurrentPlayerMut().tracking.SetCell(c, Cell::Hit); // BUG: should be Hit
 
         // BUG: win check uses current player's own board instead of opponent's board
-        if (CurrentPlayer().own.AllShipsSunk())
+        if (OtherPlayer().own.AllShipsSunk())
         {
             m_state = GameState::GameOver;
             m_winner = m_current; // BUG: declares shooter winner based on wrong check
