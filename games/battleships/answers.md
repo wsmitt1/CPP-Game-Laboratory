@@ -1,9 +1,9 @@
 ﻿# Battleships Buggy Lab — Answers
 
 ## Team
-- Team name:
-- Partner A:
-- Partner B:
+- Team name: 
+- Partner A: William Smitt
+- Partner B: Elliot Cigehn
 
 ---
 
