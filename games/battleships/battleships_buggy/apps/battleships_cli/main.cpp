@@ -130,6 +130,9 @@ int main()
                 case ShotResult::Hit:    std::cout << "Hit\n"; break;
                 case ShotResult::Sunk:   std::cout << "Sunk!\n"; break;
                 case ShotResult::Invalid:std::cout << "Invalid\n"; break;
+                case ShotResult::AlreadyTried: 
+                    std::cout << "You already tried this square, try again." << std::endl;
+                    break;
                 default:                 std::cout << "?\n"; break;
                 }
 

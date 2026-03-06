@@ -69,8 +69,9 @@ namespace bs {
             m_winner = m_current; // BUG: declares shooter winner based on wrong check
             return r;
         }
-
-        AdvanceTurn();
+        if (!(r == ShotResult::AlreadyTried)) {
+            AdvanceTurn();
+        }
         return r;
     }
 

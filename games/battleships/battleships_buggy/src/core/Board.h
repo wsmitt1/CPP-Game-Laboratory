@@ -11,7 +11,8 @@ namespace bs {
         Empty,
         Ship,
         Hit,
-        Miss
+        Miss,
+        AlreadyTried
     };
 
     class Board

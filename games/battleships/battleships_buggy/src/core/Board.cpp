@@ -79,10 +79,11 @@ namespace bs {
 
         // Intended by spec: AlreadyTried for Hit/Miss.
         // BUG: repeated shots behave incorrectly and even overwrite Hit -> Miss.
+
         if (cell == Cell::Hit || cell == Cell::Miss)
         {
-            SetCell(target, Cell::Miss); // BUG: overwrites Hit into Miss
-            return ShotResult::Miss;     // BUG: should return AlreadyTried (and not consume turn)
+            //SetCell(target, Cell::Miss); // BUG: overwrites Hit into Miss
+            return ShotResult::AlreadyTried;     // BUG: should return AlreadyTried (and not consume turn)
         }
 
         if (cell == Cell::Empty)
