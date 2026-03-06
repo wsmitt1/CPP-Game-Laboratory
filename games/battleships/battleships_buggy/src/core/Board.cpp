@@ -77,13 +77,10 @@ namespace bs {
 
         Cell cell = GetCell(target);
 
-        // Intended by spec: AlreadyTried for Hit/Miss.
-        // BUG: repeated shots behave incorrectly and even overwrite Hit -> Miss.
 
         if (cell == Cell::Hit || cell == Cell::Miss)
         {
-            //SetCell(target, Cell::Miss); // BUG: overwrites Hit into Miss
-            return ShotResult::AlreadyTried;     // BUG: should return AlreadyTried (and not consume turn)
+            return ShotResult::AlreadyTried;   
         }
 
         if (cell == Cell::Empty)
@@ -114,12 +111,17 @@ namespace bs {
 
     bool Board::AllShipsSunk() const
     {
-        // BUG: if there are no ships, returns true (game instantly won)
         for (const Ship& s : m_ships)
         {
             if (!s.IsSunk()) return false;
         }
-        return true;
+        if (static_cast<int> (m_ships.size()) >= 1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
     }
 
 } // namespace bs
