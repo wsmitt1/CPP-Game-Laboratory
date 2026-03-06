@@ -37,8 +37,6 @@ namespace bs {
 
     void Game::FinishSetupIfReady()
     {
-        // Intended by spec: only proceed when BOTH players placed ALL ships.
-        // BUG: proceeds when *current player* finished, ignoring the other.
         int otherPlayer{ -1 };
         if (m_current == 0) { otherPlayer = 1; }
         else { otherPlayer = 0; }
@@ -56,20 +54,18 @@ namespace bs {
 
         ShotResult r = OtherPlayerMut().own.Shoot(c);
 
-        // BUG: tracking board update is wrong: we mark Hit cells as Ship instead of Hit.
         if (r == ShotResult::Miss)
             CurrentPlayerMut().tracking.SetCell(c, Cell::Miss);
         else if (r == ShotResult::Hit || r == ShotResult::Sunk)
-            CurrentPlayerMut().tracking.SetCell(c, Cell::Hit); // BUG: should be Hit
+            CurrentPlayerMut().tracking.SetCell(c, Cell::Hit);
 
-        // BUG: win check uses current player's own board instead of opponent's board
         if (OtherPlayerMut().own.AllShipsSunk())
         {
             m_state = GameState::GameOver;
-            m_winner = m_current; // BUG: declares shooter winner based on wrong check
+            m_winner = m_current;
             return r;
         }
-        if (!(r == ShotResult::AlreadyTried)) {
+        if (!(r == ShotResult::AlreadyTried || r == ShotResult::Invalid)) {
             AdvanceTurn();
         }
         return r;

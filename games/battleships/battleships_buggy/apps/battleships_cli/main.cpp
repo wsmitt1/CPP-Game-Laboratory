@@ -57,7 +57,7 @@ int main()
                 std::cout << "All ships placed for " << player.name << ". Press Enter to continue...\n";
                 std::string tmp; std::getline(std::cin, tmp);
 
-                game.FinishSetupIfReady(); // BUG: may start Playing too early (before both players finished)
+                game.FinishSetupIfReady();
                 game.NextPlayerDuringSetup();
                 continue;
             }
@@ -83,8 +83,12 @@ int main()
             PlaceResult pr = game.PlaceShipForCurrent(Ship{ length, start, o });
             if (pr != PlaceResult::Ok)
             {
-                // BUG: not informative (spec asks to distinguish OutOfBounds vs Overlap).
-                std::cout << "Could not place ship. (buggy message, no detail)\n";
+                if (pr == PlaceResult::OutOfBounds) {
+                    std::cout << "You cannot place ships out of bounds." << std::endl;
+                }
+                if (pr == PlaceResult::Overlap) {
+                    std::cout << "You cannot place ships on top of other ships." << std::endl;
+                }
                 std::cout << "Press Enter...\n";
                 std::getline(std::cin, line);
             }
@@ -129,7 +133,7 @@ int main()
                 case ShotResult::Miss:   std::cout << "Miss\n"; break;
                 case ShotResult::Hit:    std::cout << "Hit\n"; break;
                 case ShotResult::Sunk:   std::cout << "Sunk!\n"; break;
-                case ShotResult::Invalid:std::cout << "Invalid\n"; break;
+                case ShotResult::Invalid:std::cout << "Invalid, try again.\n"; break;
                 case ShotResult::AlreadyTried: 
                     std::cout << "You already tried this square, try again." << std::endl;
                     break;
